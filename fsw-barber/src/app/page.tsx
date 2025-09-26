@@ -1,8 +1,10 @@
 "use client"
 
 import Image from "next/image"
+import { Button } from "./_lib/ui/button"
+
 
 //SERVER COMPONENTS
 export default function Home() {
-  return <div className="mb-5 bg-red-400 text-red-500">aa</div>
+  return <Button>teste</Button>
 }
