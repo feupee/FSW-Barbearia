@@ -1,7 +1,7 @@
 #Aula 0
 
-- Setup do banco
-- Seeding do banco (colocar dados)
+- [X] Setup do banco
+- [X] Seeding do banco (colocar dados)
 - [] Introdução ao Next.Js
 - [] Tailwind e shaden
 - [] Git Hooks
