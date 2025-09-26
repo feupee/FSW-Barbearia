@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -16,14 +15,13 @@ model User {
   updateAt  DateTime  @updatedAt
   bookings  Booking[]
 }
-
 model Barbershop {
   id          String              @id @default(uuid())
   address     String
   name        String
   phones      String[]
   description String
-  imageURL    String
+  imageUrl    String
   createdAt   DateTime            @default(now())
   updateAt    DateTime            @updatedAt
   services    BarbershopService[]
@@ -33,7 +31,7 @@ model BarbershopService {
   id           String    @id @default(uuid())
   name         String
   description  String
-  imageURL     String
+  imageUrl     String
   price        Decimal   @db.Decimal(10, 2)
   barbershopId String
   createdAt    DateTime  @default(now())
