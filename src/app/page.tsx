@@ -1,18 +1,21 @@
-"use client"
-
 import { SearchIcon } from "lucide-react"
 import { Button } from "./_components/ui/button"
-import Header from "./_components/ui/header"
+import Header from "./_components/header"
 import { Input } from "./_components/ui/input"
 import Image from "next/image"
 import { Card, CardContent } from "./_components/ui/card"
 import { Badge } from "./_components/ui/badge"
 import { Avatar, AvatarImage } from "./_components/ui/avatar"
+import { db } from "./_lib/prisma"
+import BarbershopItem from "./_components/barbershop-item"
 
 const name = "test"
 
 //SERVER COMPONENTS
-export default function Home() {
+const Home = async () => {
+  //Chamar meu banco de dados
+  //Pegando as barbearias do banco
+  const barbershop = await db.barbershop.findMany({})
   return (
     <div className="">
       <Header />
@@ -48,8 +51,11 @@ export default function Home() {
           />
         </div>
 
-          {/* Agendamento */}
-        <Card className="mt-6">
+        {/* Agendamento */}
+        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+          Agendamentos
+        </h2>
+        <Card className="">
           <CardContent className="flex justify-between p-0">
             {/* Esquerda */}
             <div className="flex flex-col gap-2 py-5 pl-5">
@@ -65,12 +71,23 @@ export default function Home() {
             {/* Direita */}
             <div className="flex flex-col items-center justify-center border-l-2 border-solid px-5">
               <p className="text-sm">Setembro</p>
-              <p className="text-3xl pb-1">26</p>
+              <p className="pb-1 text-3xl">26</p>
               <p className="text-sm">20:09</p>
             </div>
           </CardContent>
         </Card>
+        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+          Recomendados
+        </h2>
+        {/*renderizando as barbearias*/}
+        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {barbershop.map((barbershop) => (
+          <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+        ))}
+        </div>
       </div>
     </div>
   )
 }
+
+export default Home
