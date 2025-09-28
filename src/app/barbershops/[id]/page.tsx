@@ -1,7 +1,8 @@
+import PhoneItem from "@/app/_components/phone-item"
 import ServciceItemProp from "@/app/_components/service-item"
 import { Button } from "@/app/_components/ui/button"
 import { db } from "@/app/_lib/prisma"
-import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react"
+import { ChevronLeftIcon, MapPinIcon, MenuIcon, Phone, SmartphoneIcon, StarIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -75,13 +76,21 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
       </div>
 
       {/*Serviços*/}
-      <div className="p-5">
-        <h2 className="text-xs font-bold uppercase text-gray-400 mb-3">Serviços</h2>
+      <div className="p-5 border-b border-solid space-y-3">
+        <h2 className="mb-3 text-xs font-bold uppercase text-gray-400">
+          Serviços
+        </h2>
         <div className="space-y-3">
           {barbershop.services.map((service) => (
-          <ServciceItemProp key={service.id} service={service} />
-        ))}
+            <ServciceItemProp key={service.id} service={service} />
+          ))}
         </div>
+      </div>
+      {/*Contato*/}
+      <div className="border-bottom space-y-3 border-solid p-5">
+        {barbershop.phones.map(phone => (
+          <PhoneItem key={phone} phone={phone} />
+        ))}
       </div>
     </div>
   )
