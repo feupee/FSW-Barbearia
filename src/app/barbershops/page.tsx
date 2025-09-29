@@ -5,18 +5,38 @@ import { db } from "../_lib/prisma"
 
 interface BarbershopsPageProps {
   searchParams: {
-    search?: string
+    title?: string
+    service?: string
   }
 }
 
 const BarbershopsPage = async ({ searchParams }: BarbershopsPageProps) => {
   //Método de busca no banco de dados baseado em parâmetro
+
   const barbershops = await db.barbershop.findMany({
     where: {
-      name: {
-        contains: searchParams?.search,
-        mode: "insensitive", //Não diferencia maiúsculas de minúsculas
-      },
+      OR: [
+        searchParams?.title
+          ? {
+              name: {
+                contains: searchParams?.title,
+                mode: "insensitive", //Não diferencia maiúsculas de minúsculas
+              },
+            }
+          : {},
+        searchParams?.service
+          ? {
+              services: {
+                some: {
+                  name: {
+                    contains: searchParams?.service,
+                    mode: "insensitive",
+                  },
+                },
+              },
+            }
+          : {},
+      ],
     },
   })
   //&quot; = aspas duplas escapadas pelo React/Next.js
@@ -29,7 +49,7 @@ const BarbershopsPage = async ({ searchParams }: BarbershopsPageProps) => {
 
       <div className="px-5 pb-6">
         <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
-          Resultados para `{searchParams.search}`
+          Resultados para `{searchParams.title || searchParams?.service}`
         </h2>
         <div className="grid grid-cols-2 gap-4">
           {barbershops.map((barbershop) => (

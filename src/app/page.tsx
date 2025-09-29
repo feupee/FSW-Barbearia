@@ -1,3 +1,4 @@
+import React from "react"
 import { SearchIcon } from "lucide-react"
 import { Button } from "./_components/ui/button"
 import Header from "./_components/header"
@@ -9,6 +10,7 @@ import BarbershopItem from "./_components/barbershop-item"
 import { quickSearchOptions } from "./_constants/search"
 import BookingItem from "./_components/booking-item"
 import Search from "./_components/search"
+import Link from "next/link"
 
 const name = "test"
 
@@ -37,14 +39,16 @@ const Home = async () => {
         </div>
         <div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
           {quickSearchOptions.map((option) => (
-            <Button variant="secondary" key={option.title}>
-              <Image
-                alt={option.title}
-                src={option.imageUrl}
-                height={16}
-                width={16}
-              />
-              {option.title}
+            <Button className="gap-2" variant="secondary" key={option.title} asChild>
+              <Link href={`/barbershops?service=${option.title}`}>
+                <Image
+                  alt={option.title}
+                  src={option.imageUrl}
+                  height={16}
+                  width={16}
+                />
+                {option.title}
+              </Link>
             </Button>
           ))}
         </div>
@@ -82,7 +86,6 @@ const Home = async () => {
           ))}
         </div>
       </div>
-      
     </div>
   )
 }
