@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import Image from "next/image"
 import { Button } from "./ui/button"
@@ -15,8 +17,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog"
+import { signIn, signOut, useSession } from "next-auth/react"
+import { sign } from "crypto"
 
 const SideBarSheet = () => {
+
+  const {data} = useSession()
+  const handleLoginWithgoogleClick = () => signIn("google")
+  const handleLogoutClick = () => signOut()
   return (
     <SheetContent className="overflow-y-auto">
       <SheetHeader>
@@ -24,7 +32,25 @@ const SideBarSheet = () => {
       </SheetHeader>
 
       <div className="flex items-center justify-between gap-3 border-b border-solid py-5">
-        <h2 className="pt-3 text-lg font-bold">Olá, faça seu login</h2>
+        
+        {/*Se eu tiver um usuário logado com a conta do google ele mostra as informações
+        dele, caso contrário mostra informações padrões para realizar login */}
+        {data?.user ? (
+          <div className="flex items-center gap-2">
+          <Avatar>
+            <AvatarImage
+              src={data?.user?.image ?? ""}
+              alt="Avatar"
+            />
+          </Avatar>
+          <div>
+            <p className="font-bold">{data?.user?.name}</p>
+            <p className="text-xs text-gray-400">{data?.user?.email}</p>
+          </div>
+          </div>
+        ) : (
+          <>
+          <h2 className="pt-3 text-lg font-bold">Olá, faça seu login</h2>
         <Dialog>
           <DialogTrigger asChild>
             <Button className="ml-auto" variant="default" size="sm">
@@ -41,6 +67,7 @@ const SideBarSheet = () => {
             <Button
               className="mt-4 w-full justify-center gap-2"
               variant="outline"
+              onClick={handleLoginWithgoogleClick}
             >
               <Image
                 alt="Fazer Login com Google"
@@ -52,16 +79,8 @@ const SideBarSheet = () => {
             </Button>
           </DialogContent>
         </Dialog>
-        {/*<Avatar>
-            <AvatarImage
-              src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSqyQra-bB8Z68TVgTdNrVUYA1EbrKkUoNKmfi87V0-F62d1Ui3wZsGVBDVCRIB32tDQdaPEIHSuVlRerSwfrXat08gNHAcbeq_dCpBs7lpkw"
-              alt="Avatar"
-            />
-          </Avatar>
-          <div>
-            <p className="font-bold">Felipe Silva</p>
-            <p className="text-xs text-gray-400">felipe@gmail.com</p>
-          </div> */}
+          </>
+        )}
       </div>
 
       <div className="flex flex-col gap-2 border-b border-solid py-5">
@@ -96,7 +115,7 @@ const SideBarSheet = () => {
         ))}
       </div>
       <div className="flex flex-col gap-2 py-5">
-        <Button className="justify-start gap-2" variant="ghost">
+        <Button className="justify-start gap-2" variant="ghost" onClick={handleLogoutClick}>
           <LogOutIcon size={18} />
           Sair da Conta
         </Button>
