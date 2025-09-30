@@ -36,7 +36,7 @@ const BarbershopItem = ({ barbershop }: BarbershopItemprops) => {
           <h3 className="truncate font-semibold">{barbershop.name}</h3>
           <p className="truncate text-sm text-gray-400">{barbershop.address}</p>
           <Button variant="secondary" className="mt-3 w-full">
-            <Link href={`/barbershops/${barbershop.id}`}>Reservar</Link>
+            <Link href={`/barbershops/${barbershop.id}`}>Saiba mais</Link>
           </Button>
         </div>
       </CardContent>

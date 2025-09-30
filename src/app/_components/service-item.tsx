@@ -1,13 +1,85 @@
-import { BarbershopService } from "@prisma/client"
+"use client"
+
+import { Barbershop, BarbershopService } from "@prisma/client"
 import Image from "next/image"
 import { Button } from "./ui/button"
 import { Card, CardContent } from "./ui/card"
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet"
+import { Calendar } from "./ui/calendar"
+import { ptBR } from "date-fns/locale"
+import { useState } from "react"
+import { date } from "zod"
+import { format, set, setHours } from "date-fns"
+import { createBooking } from "../_actions/create_booking"
+import { useSession } from "next-auth/react"
+import { toast } from "sonner"
 
 interface ServiceItemProp {
   service: BarbershopService
+  barbershop: Pick<Barbershop, "name">
 }
 
-const ServiceItemProp = ({ service }: ServiceItemProp) => {
+const TIME_LIST = [
+  "09:00",
+  "10:00",
+  "11:00",
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00",
+  "16:00",
+  "17:00",
+  "18:00",
+  "19:00",
+  "20:00",
+  "21:00",
+  "22:00",
+]
+
+const ServiceItemProp = ({ service, barbershop }: ServiceItemProp) => {
+  const { data } = useSession()
+  const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
+  const [selectedTime, setSelectedTime] = useState<string | undefined>(
+    undefined,
+  )
+
+  const handleDateSelect = (date: Date | undefined) => {
+    setSelectedDay(date)
+  }
+
+  const handleTimeSelect = (time: string) => {
+    setSelectedTime(time)
+  }
+  const handleCreateBooking = async () => {
+    try {
+      if (!selectedDay || !selectedTime) return
+
+      const hours = Number(selectedTime.split(":")[0])
+      const minutes = Number(selectedTime.split(":")[1])
+      const newDate = set(selectedDay, {
+        minutes: minutes,
+        hours: hours,
+      })
+
+      await createBooking({
+        serviceId: service.id,
+        userId: (data?.user as any).id,
+        date: newDate,
+      })
+      toast.success("Reserva criada com sucesso!")
+    } catch (error) {
+      console.error(error)
+      toast.error("Erro ao criar reserva")
+    }
+  }
+
   return (
     <Card>
       <CardContent className="flex h-full flex-col p-3">
@@ -33,13 +105,87 @@ const ServiceItemProp = ({ service }: ServiceItemProp) => {
                   currency: "BRL",
                 }).format(Number(service.price))}
               </p>
-              <Button variant="secondary" size="sm">
-                Reservar
-              </Button>
+
+              {/*Reservar serviço*/}
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="secondary" size="sm">
+                    Reservar
+                  </Button>
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader className="flex items-center">
+                    <SheetTitle className="text-left">Fazer Reserva</SheetTitle>
+                  </SheetHeader>
+
+                  <div className="flex justify-center border-b border-solid py-5">
+                    <Calendar
+                      mode="single"
+                      locale={ptBR}
+                      selected={selectedDay}
+                      onSelect={handleDateSelect}
+                      className="h-full w-full"
+                    />
+                  </div>
+                  {selectedDay && (
+                    <div className="flex gap-3 overflow-x-auto border-b border-solid p-5 [&::-webkit-scrollbar]:hidden">
+                      {TIME_LIST.map((time) => (
+                        <Button
+                          key={time}
+                          onClick={() => handleTimeSelect(time)}
+                          variant={
+                            selectedTime === time ? "default" : "outline"
+                          }
+                          className="m-1 rounded-full"
+                        >
+                          {time}
+                        </Button>
+                      ))}
+                    </div>
+                  )}
+                  {selectedDay && selectedTime && (
+                    <Card className="mt-5">
+                      <CardContent className="flex-col space-y-2 p-3">
+                        <div className="flex justify-between">
+                          <h2 className="font-bold">{service.name}</h2>
+                          <h2 className="font-bold">
+                            {Intl.NumberFormat("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            }).format(Number(service.price))}
+                          </h2>
+                        </div>
+                        <div className="flex justify-between">
+                          <p className="text-gray-400">Data</p>
+                          <p>
+                            {format(selectedDay, "d 'de' MMMM", {
+                              locale: ptBR,
+                            })}
+                          </p>
+                        </div>
+                        <div className="flex justify-between">
+                          <p className="text-gray-400">Horário</p>
+                          <p>{selectedTime}</p>
+                        </div>
+                        <div className="flex justify-between">
+                          <p className="text-gray-400">Barbearia</p>
+                          <p>{barbershop.name}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+                  <SheetFooter className="mt-5">
+                    {selectedDay && selectedTime && (
+                      <Button onClick={handleCreateBooking} variant="default">
+                        Confirmar
+                      </Button>
+                    )}
+                  </SheetFooter>
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
         </div>
-        
       </CardContent>
     </Card>
   )

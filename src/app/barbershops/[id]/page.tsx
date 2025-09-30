@@ -1,4 +1,5 @@
 import PhoneItem from "@/app/_components/phone-item"
+import ServiceItemProp from "@/app/_components/service-item"
 import ServciceItemProp from "@/app/_components/service-item"
 import SideBarSheet from "@/app/_components/sidebar-sheet"
 import { Button } from "@/app/_components/ui/button"
@@ -86,7 +87,7 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
         </h2>
         <div className="space-y-3">
           {barbershop.services.map((service) => (
-            <ServciceItemProp key={service.id} service={service} />
+            <ServiceItemProp key={service.id} service={service} barbershop={barbershop} />
           ))}
         </div>
       </div>
