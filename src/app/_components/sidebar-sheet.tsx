@@ -19,6 +19,7 @@ import {
 } from "./ui/dialog"
 import { signIn, signOut, useSession } from "next-auth/react"
 import { sign } from "crypto"
+import SignInDialog from "./sign-in-dialog"
 
 const SideBarSheet = () => {
 
@@ -58,26 +59,9 @@ const SideBarSheet = () => {
             </Button>
           </DialogTrigger>
           <DialogContent className="w-[90%]">
-            <DialogHeader>
-              <DialogTitle>Faça login na plataforma</DialogTitle>
-              <DialogDescription>
-                Conecte-se usando sua conta do Google
-              </DialogDescription>
-            </DialogHeader>
-            <Button
-              className="mt-4 w-full justify-center gap-2"
-              variant="outline"
-              onClick={handleLoginWithgoogleClick}
-            >
-              <Image
-                alt="Fazer Login com Google"
-                src="/Gooogle.png"
-                height={18}
-                width={18}
-              />
-              Google
-            </Button>
-          </DialogContent>
+            <SignInDialog />
+            </DialogContent>
+          
         </Dialog>
           </>
         )}
