@@ -21,11 +21,11 @@ export const quickSearchOptions: QuickSearchOptions[] = [
     title: "Hidratação",
   },
   {
-    imageUrl: "/sobrancelha.png",
-    title: "Sobrancelha",
-  },
-  {
     imageUrl: "/toalha.png",
     title: "Massagem",
+  },
+  {
+    imageUrl: "/sobrancelha.png",
+    title: "Sobrancelha",
   },
 ]
