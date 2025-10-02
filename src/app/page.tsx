@@ -11,6 +11,8 @@ import Link from "next/link"
 import { getServerSession } from "next-auth"
 import { authOptions } from "./_lib/auth"
 import TesteInput from "./_components/teste_input"
+import { format } from "date-fns"
+import { ptBR } from "date-fns/locale"
 
 const name = "test"
 
@@ -54,8 +56,12 @@ const Home = async () => {
     <div className="">
       <Header />
       <div className="p-7">
-        <h2 className="text-xl font-bold">Olá, Felipe</h2>
-        <p>Sexta-feira, 26 de Setembro</p>
+        <h2 className="text-xl font-bold">Olá, {session?.user?.name ? session.user.name.split(" ")[0] : "bem-vindo!"}</h2>
+        <p>
+          <span className="capitalize">{format(new Date(), "EEEE, dd", { locale: ptBR })}</span>
+          <span> de </span>
+          <span className="capitalize">{format(new Date(), "MMMM", { locale: ptBR })}</span>
+        </p>
         {/* Search */}
         <div className="mt-6">
           <Search />
