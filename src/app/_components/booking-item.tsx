@@ -5,7 +5,7 @@ import { CardContent } from "./ui/card"
 import { Avatar } from "./ui/avatar"
 import { Badge } from "./ui/badge"
 import { AvatarImage } from "./ui/avatar"
-import { Booking, Prisma } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 import { format, isFuture } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import {
@@ -62,6 +62,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
       setIsSheetOpen(false)
       toast.success("Agendamento cancelado com sucesso!")
     } catch (error) {
+      console.log(error)
       toast.error("Erro ao cancelar agendamento. Tente novamente.")
     }
   }

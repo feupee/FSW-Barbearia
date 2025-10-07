@@ -1,20 +1,14 @@
 import { PrismaClient } from "@prisma/client"
 
-declare global {
-  var cachedPrisma: PrismaClient
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
 }
 
-let prisma: PrismaClient
-if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient()
-} else {
-  if (!global.cachedPrisma) {
-    global.cachedPrisma = new PrismaClient()
-  }
-  prisma = global.cachedPrisma
-}
+const db = globalForPrisma.prisma ?? new PrismaClient() // Corrigido: const em vez de var
 
-export const db = prisma
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db
+
+export { db }
 
 
 //Garante única conexão com o banco de dados

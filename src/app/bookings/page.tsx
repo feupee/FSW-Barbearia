@@ -7,23 +7,22 @@ import { redirect } from "next/navigation"
 
 const BookingsPage = async () => {
   const session = await getServerSession(authOptions)
-
-  // Verifica se o usuário está logado
+  
   if (!session?.user) {
     redirect("/")
   }
 
   const confirmedBookings = await db.booking.findMany({
     where: {
-      userId: (session.user as any).id,
+      userId: (session.user as { id: string }).id, // Tipo específico em vez de any
       date: {
-        gte: new Date(), // Filtra agendamentos futuros
+        gte: new Date(),
       }
     },
     include: {
       service: {
         include: {
-          barbershop: true, // Adicione esta linha
+          barbershop: true,
         },
       },
     },
@@ -31,15 +30,15 @@ const BookingsPage = async () => {
 
   const concludedBookings = await db.booking.findMany({
     where: {
-      userId: (session.user as any).id,
+      userId: (session.user as { id: string }).id, // Tipo específico em vez de any
       date: {
-        lt: new Date(), // Filtra agendamentos passados
+        lt: new Date(),
       }
     },
     include: {
       service: {
         include: {
-          barbershop: true, // Adicione esta linha
+          barbershop: true,
         },
       },
     },

@@ -10,16 +10,12 @@ import Search from "./_components/search"
 import Link from "next/link"
 import { getServerSession } from "next-auth"
 import { authOptions } from "./_lib/auth"
-import TesteInput from "./_components/teste_input"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-
-const name = "test"
 
 //SERVER COMPONENTS
 const Home = async () => {
   const session = await getServerSession(authOptions)
-
   //Chamar meu banco de dados
   //Pegando as barbearias do banco
   const barbershop = await db.barbershop.findMany({})
@@ -31,10 +27,10 @@ const Home = async () => {
     },
   })
 
-  const confirmedBookings = session?.user
+    const confirmedBookings = session?.user
     ? await db.booking.findMany({
         where: {
-          userId: (session?.user as any)?.id,
+          userId: (session.user as { id: string }).id, // Tipo específico em vez de any
           date: {
             gte: new Date(),
           }

@@ -1,27 +1,38 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "./prisma";
-import { Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google"
-import { AuthOptions } from "node_modules/next-auth/core/types";
+import { AuthOptions } from "next-auth";
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+      id?: string;
+    };
+  }
+}
 
 export const authOptions: AuthOptions = {
-        adapter: PrismaAdapter(db) as Adapter,
-      providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID as string,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
-        }),
-      ],
-    
-      //
-      callbacks: {
-        async session({ session, user }) {
-          session.user={
-            ...session.user,
-            id: user.id,
-          } as any;
-          return session
-        }
-      },
-      secret: process.env.NEXT_AUTH_SECRET,
+  adapter: PrismaAdapter(db),
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
+  ],
+  callbacks: {
+    session: async ({ session, token }) => {
+      session.user = { ...session.user, id: token.sub as string } // Corrigido: tipo específico
+      return session
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.sub = user.id
+      }
+      return token
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 }
