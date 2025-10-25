@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FSW Barbearia
 
-## Getting Started
+A comprehensive SaaS solution for managing barbershops, streamlining operations and enhancing customer experience.
 
-First, run the development server:
+Empowering barbershops with efficient scheduling, client management, and business analytics.
+
+![License](https://img.shields.io/github/license/feupee/SaaS-Barbearia)
+![GitHub stars](https://img.shields.io/github/stars/feupee/SaaS-Barbearia?style=social)
+![GitHub forks](https://img.shields.io/github/forks/feupee/SaaS-Barbearia?style=social)
+![GitHub issues](https://img.shields.io/github/issues/feupee/SaaS-Barbearia)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/feupee/SaaS-Barbearia)
+![GitHub last commit](https://img.shields.io/github/last-commit/feupee/SaaS-Barbearia)
+
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Node.js](https://img.shields.io/badge/node.js-%2343853D.svg?style=for-the-badge&logo=node.js&logoColor=white)
+![npm](https://img.shields.io/badge/npm-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![PostgreSQL](https://img.shields.io/badge/postgresql-%23336791.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Prisma](https://img.shields.io/badge/prisma-%232D3748.svg?style=for-the-badge&logo=prisma&logoColor=white)
+
+## About
+
+SaaS Barbearia is a modern, scalable SaaS application designed to meet the unique needs of barbershop management. It offers a range of features from online booking and appointment scheduling to customer relationship management (CRM) and financial reporting. The application aims to streamline day-to-day operations, reduce administrative overhead, and improve the overall customer experience.
+
+This project addresses the challenges faced by barbershop owners in managing their business efficiently. It provides a centralized platform for handling appointments, tracking customer preferences, managing inventory, and generating insightful reports. The target audience includes barbershop owners, managers, and staff looking to optimize their business processes and enhance customer satisfaction.
+
+## Features
+
+- **Appointment Scheduling**: Intuitive interface for booking, rescheduling, and managing appointments.
+- **Client Management**: Comprehensive CRM features for tracking customer preferences, appointment history, and contact information.
+- **Secure Data Storage**: Robust security measures to protect sensitive customer and business data.
+- **Customizable Interface**: Tailor the application's look and feel to match your brand identity.
+- **Responsive Design**: Seamless experience across desktop, tablet, and mobile devices.
+- **Reporting & Analytics**: Generate insightful reports on key business metrics, such as revenue, customer retention, and service performance.
+
+## Quick Start
+
+Clone and run in 3 steps:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/feupee/SaaS-Barbearia.git
+cd SaaS-Barbearia
+npm install
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prerequisites
+- Node.js 18+ and npm
+- Git
+- A database system (e.g., PostgreSQL, MySQL)
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+SaaS-Barbearia/
+├── 📁 src/
+│   ├── 📁 components/         # Reusable UI components
+│   ├── 📁 pages/              # Application pages
+│   ├── 📁 services/           # Business logic services
+│   ├── 📁 utils/              # Utility functions
+│   ├── 📁 models/             # Data models/interfaces
+│   ├── 📁 styles/             # CSS/styling files
+│   └── 📄 index.tsx           # Application entry point
+├── 📁 public/                 # Static assets
+├── 📁 tests/                  # Test files
+├── 📁 docs/                   # Documentation
+├── 📄 .env.example           # Environment variables template
+├── 📄 .gitignore             # Git ignore rules
+├── 📄 package.json           # Project dependencies
+├── 📄 README.md              # Project documentation
+└── 📄 LICENSE                # License file
+```
