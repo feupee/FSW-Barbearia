@@ -24,8 +24,4 @@ export const quickSearchOptions: QuickSearchOptions[] = [
     imageUrl: "/toalha.png",
     title: "Massagem",
   },
-  {
-    imageUrl: "/sobrancelha.png",
-    title: "Sobrancelha",
-  },
 ]
