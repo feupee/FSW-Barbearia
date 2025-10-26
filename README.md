@@ -4,13 +4,6 @@ A comprehensive SaaS solution for managing barbershops, streamlining operations 
 
 Empowering barbershops with efficient scheduling, client management, and business analytics.
 
-![License](https://img.shields.io/github/license/feupee/SaaS-Barbearia)
-![GitHub stars](https://img.shields.io/github/stars/feupee/SaaS-Barbearia?style=social)
-![GitHub forks](https://img.shields.io/github/forks/feupee/SaaS-Barbearia?style=social)
-![GitHub issues](https://img.shields.io/github/issues/feupee/SaaS-Barbearia)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/feupee/SaaS-Barbearia)
-![GitHub last commit](https://img.shields.io/github/last-commit/feupee/SaaS-Barbearia)
-
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Node.js](https://img.shields.io/badge/node.js-%2343853D.svg?style=for-the-badge&logo=node.js&logoColor=white)
 ![npm](https://img.shields.io/badge/npm-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
